@@ -2,6 +2,7 @@ package application;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
@@ -13,6 +14,8 @@ public class Program {
 	public static void main(String[] args) {
 		
 		
+		Scanner sc = new Scanner(System.in);
+		
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		
 		System.out.println("=== TEST 01: seller findById ===");
@@ -20,7 +23,7 @@ public class Program {
 		System.out.println(seller);
 		
 		System.out.println("=== TEST 02: seller findByDepartment ===");
-		Department department = new Department(4, null);
+		Department department = new Department(3, null);
 		List<Seller> list = sellerDao.findByDepartment(department);
 		for(Seller obj : list){
 			System.out.println(obj);
@@ -33,7 +36,7 @@ public class Program {
 		}
 		
 		System.out.println("=== TEST 04: seller insert ===");
-		Seller newSeller = new Seller(null, "Greg", "greg@gmail.com", new Date(), 4000.0, department);
+		Seller newSeller = new Seller(null, "Bruno Marinelli", "brunomarinelli@gmail.com", new Date(), 5400.0, department);
 		sellerDao.insert(newSeller);
 		System.out.println("Inserted! New id = " + newSeller.getId());
 		
@@ -42,7 +45,15 @@ public class Program {
 		seller.setName("Thalia Freitas");
 		sellerDao.update(seller);
 		System.out.println("Update completed!");
-
+		
+		System.out.println("=== TEST 06: seller delete ===");
+		System.out.print("Enter id for delete test: ");
+		int id = sc.nextInt();
+		sellerDao.deleteById(id);
+		System.out.println("Delete completed");
+		
+		sc.close();
+		
 	}
 
 }
